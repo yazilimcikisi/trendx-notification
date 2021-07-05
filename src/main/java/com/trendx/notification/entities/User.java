@@ -18,11 +18,11 @@ public class User {
     String eMail;
     String fullName;
 
-    List<Product> followedProducts = new ArrayList<>(Arrays.asList(new Product("Bilbo", "tanim", 11334.4, 166.23), new Product("Bilbo22", "tanim22", 11334.4, 166.23)));
+    List<Product> followedProducts = new ArrayList<>(Arrays.asList
+            (new Product("Bilbo", "tanim", 11334.4, 166.23),
+                    new Product("Bilbo22", "tanim22", 11334.4, 166.23)));
 
-    public User() {
-
-    }
+    public User() {}
 
     public User(String eMail, String fullName) {
         this.eMail = eMail;
@@ -55,9 +55,9 @@ public class User {
 
     @KafkaListener(topics = "topic", groupId = "group")
     public void listen(@Payload Product product) {
-        //if (followedProducts.contains(product)){
-        System.out.println(product.description + "'ın fiyatı değişti  !! !!");
-        //}
+        if (followedProducts.contains(product)){
+        System.out.println(product.description + "'ın fiyatı değişti !");
+        }
     }
 
 }

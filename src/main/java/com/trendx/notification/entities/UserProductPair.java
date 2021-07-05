@@ -1,6 +1,6 @@
 package com.trendx.notification.entities;
 
-public class Holder {
+public class UserProductPair {
     Product product;
     User user;
 

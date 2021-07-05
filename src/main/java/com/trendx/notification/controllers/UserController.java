@@ -1,9 +1,8 @@
 package com.trendx.notification.controllers;
 
-import com.trendx.notification.entities.Holder;
-import com.trendx.notification.entities.Product;
+import com.trendx.notification.entities.UserProductPair;
 import com.trendx.notification.entities.User;
-import com.trendx.notification.repositories.UserRepository;
+import com.trendx.notification.services.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,31 +11,24 @@ import java.util.List;
 @RequestMapping("users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public List<User> getAllUser() {
-        return userRepository.findAll();
+        return userService.getAllUser();
     }
 
     @PostMapping
-    public void saveUser(@RequestBody User user) {
-        User u = new User(user.geteMail(), user.getFullName());
-        userRepository.save(u);
+    public User saveUser(@RequestBody User user) {
+        return userService.saveUser(user);
     }
 
     @PostMapping("/addFollowed")
-    public void addProductToUser(@RequestBody Holder h) {
-
-        User user = h.getUser();
-        Product product = h.getProduct();
-
-        user.getFollowedProducts().add(product);
-        userRepository.save(user);
-
+    public User addProductToUser(@RequestBody UserProductPair userProductPair) {
+        return userService.addProductToUser(userProductPair);
     }
 }
